@@ -150,10 +150,20 @@ impl App {
 
     /// Go up to parent directory (Left Arrow only)
     fn go_up(&mut self) {
-        if let Some(parent) = self.current_dir.parent() {
-            self.current_dir = parent.to_path_buf();
-            self.clear_search();
-            self.load_directory();
+        if let Some(parent) = self.current_dir.parent().map(|p| p.to_path_buf()) {
+            let exited_dir = self.current_dir.clone();
+
+            self.current_dir = parent;
+            
+            // 1. Reset search and reload parent directory
+            self.search_query.clear();
+            self.mode = InputMode::Normal;
+            self.load_directory(); // This runs apply_filter() and sets selection to 0
+
+            // 2. Override the selection to highlight the directory we just left
+            if let Some(target_index) = self.filtered_items.iter().position(|path| path == &exited_dir) {
+                self.state.select(Some(target_index));
+            }
         }
     }
 
