@@ -47,6 +47,14 @@ Make sure `~/.cargo/bin` is in your `$PATH`, then launch it anywhere with:
 fe
 ```
 
+### Local installation
+
+If you need to override currently installed `fe` version, use `--force`
+```bash
+ cargo install --path . --force
+```
+
+
 ## License
 
 MIT
