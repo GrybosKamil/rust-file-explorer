@@ -175,12 +175,23 @@ impl App {
 }
 
 fn format_size(bytes: u64) -> String {
-    if bytes < 1024 {
-        format!("{} B", bytes)
-    } else if bytes < 1024 * 1024 {
-        format!("{:.1} KB", bytes as f64 / 1024.0)
+    let kb = 1024.0;
+    let mb = kb * 1024.0;
+    let gb = mb * 1024.0;
+    let tb = gb * 1024.0;
+
+    let bytes_f = bytes as f64;
+
+    if bytes_f < kb {
+        format!("[{:>5}  B]", bytes)
+    } else if bytes_f < mb {
+        format!("[{:>5.1} KB]", bytes_f / kb)
+    } else if bytes_f < gb {
+        format!("[{:>5.1} MB]", bytes_f / mb)
+    } else if bytes_f < tb {
+        format!("[{:>5.1} GB]", bytes_f / gb)
     } else {
-        format!("{:.1} MB", bytes as f64 / (1024.0 * 1024.0))
+        format!("[{:>5.1} TB]", bytes_f / tb)
     }
 }
 
@@ -230,7 +241,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         .unwrap_or_default();
 
                     if path.is_dir() {
-                        let label = format!("📁  {}/", name);
+                        let label = format!("           📁  {}/", name);
                         ListItem::new(label).style(
                             Style::default()
                                 .fg(Color::Cyan)
@@ -240,8 +251,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let size = path
                             .metadata()
                             .map(|m| format_size(m.len()))
-                            .unwrap_or_else(|_| "-".to_string());
-                        let label = format!("📄  {:<35} [{}]", name, size);
+                            .unwrap_or_else(|_| "[    -    ]".to_string());
+                        let label = format!("{} 📄  {}", size, name);
                         ListItem::new(label).style(Style::default().fg(Color::Green))
                     }
                 })
