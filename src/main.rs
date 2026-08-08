@@ -251,7 +251,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         let size = path
                             .metadata()
                             .map(|m| format_size(m.len()))
-                            .unwrap_or_else(|_| "[    -    ]".to_string());
+                            .unwrap_or_else(|_| "[   --   ]".to_string());
                         let label = format!("{} 📄  {}", size, name);
                         ListItem::new(label).style(Style::default().fg(Color::Green))
                     }

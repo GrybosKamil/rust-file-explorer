@@ -8,11 +8,10 @@ A simple, fast TUI file explorer built with Rust and Ratatui.
 
 ```text
 ┌── Directory: /home/user/projects ──────────────────────────────────┐
-│ >> 📁  src/                                                        │
-│    📄  Cargo.toml                          [320 B]                 │
-│    📄  README.md                           [1.1 KB]                │
-├── Search ──────────────────────────────────────────────────────────┤
-│ rust                                                               │
+│ >> [        ] 📁  src/                                             │
+│    [  320  B] 📄  Cargo.toml                                       │
+│    [  1.1 KB] 📄  README.md                                        │
+│    [ 10.5 GB] 📄  iso_image.iso                                    │
 └────────────────────────────────────────────────────────────────────┘
 ```
 
